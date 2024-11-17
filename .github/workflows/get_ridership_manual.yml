@@ -15,12 +15,12 @@ jobs:
         run: |
           curl -s https://transloc.up.railway.app/ridership -o "$(date +'%Y-%m-%d-%H-%M').json"
           
-          mv "$(date +'%Y-%m-%d').json" ./ridership/$(date +'%Y-%m-%d-%H-%M').json
+          mv "$(date +'%Y-%m-%d-%H-%M').json" ./ridership/$(date +'%Y-%m-%d-%H-%M').json
 
       - name: Commit and push the JSON file
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add .
-          git commit -m "Fetch and save ridership data for $(date +'%Y-%m-%d')"
+          git commit -m "Fetch and save ridership data for $(date +'%Y-%m-%d-%H-%M')"
           git push
