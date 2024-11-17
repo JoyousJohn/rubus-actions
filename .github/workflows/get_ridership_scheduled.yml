@@ -1,0 +1,28 @@
+name: Fetch and Save Daily Ridership
+
+on:
+  schedule:
+    - cron: '0 7 * * *'  # Runs every day at 7:00 AM UTC (2:00 AM EST, or 3:00 AM EDT)
+  workflow_dispatch:
+
+jobs:
+  fetch-json:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Make GET request and save JSON to file
+        run: |
+          curl -s https://transloc.up.railway.app/ridership -o "$(date +'%Y-%m-%d-%H-%M').json"
+          
+          mv "$(date +'%Y-%m-%d-%H-%M').json" ./ridership/$(date +'%Y-%m-%d-%H-%M').json
+
+      - name: Commit and push the JSON file
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add .
+          git commit -m "Fetch and save ridership data for $(date +'%Y-%m-%d-%H-%M')"
+          git push
