@@ -2,7 +2,7 @@ name: Fetch and Save Daily Ridership
 
 on:
   schedule:
-    - cron: '0 9 * * *' # Runs every day at 9:00 AM UTC (4:00 AM EST, 5:00 AM EDT)
+    - cron: '0 8 * * *' # Runs every day at 8:00 AM UTC (3:00 AM EST, 4:00 AM EDT)
   workflow_dispatch:
 
 jobs:
